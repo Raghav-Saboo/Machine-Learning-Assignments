@@ -11,16 +11,18 @@ import math
 
 
 
-def ker(a,b,type):
+sigma=2.0;
+
+def ker(a,b,kernel):
     ans=0;
-    if type=='Linear':
+    if kernel=='Linear':
         for i in range(len(b)):
             ans=ans+a[i]*b[i];
-    elif type=='Gaussian':
+    elif kernel=='Gaussian':
         for i in range(len(b)):
             ans=ans+(a[i]-b[i])*(a[i]-b[i])
-        ans=math.exp(-1.0*ans/(2*2.0*2.0))
-    elif type=='tanh':
+        ans=math.exp(-1.0*ans/(2*sigma*sigma))
+    elif kernel=='Sigmoid':
         for i in range(len(b)):
             ans=ans+a[i]*b[i];
         ans=math.tanh(ans);
@@ -36,6 +38,27 @@ def create_svm(X_train,y_train,type,eps,C):
         for j in X_train:
             nl.append(ker(i,j,type))
         K.append(nl)
+
+    '''x = np.array(X_train)
+
+    K = np.array([])
+
+    if kernel == 'Linear':
+        K = (1. + 1. / 1.0 * np.dot(x, x.T)) ** 1.0
+
+    elif kernel == 'Gaussian':
+        K = (1. + 1. / 1.0 * np.dot(x, x.T)) ** 1.0
+        K=np.dot(x,x.T)**1.0
+        N = K.shape[0]
+        xsquared = (np.diag(K) * np.ones((1, N))).T
+        b = np.ones((N, 1))
+        K = K - 0.5 * ((np.dot(xsquared, b.T) + np.dot(b, xsquared.T)))
+        K = np.exp(K / (2. * sigma ** 2))
+
+    elif kernel == 'Sigmoid':
+        K = (1. + 1. / 1.0 * np.dot(x, x.T)) ** 1.0
+        K = np.tanh(K / len(X_train[0]) + 1.0)'''
+
 
     K = 1.0*np.array(K)
 
