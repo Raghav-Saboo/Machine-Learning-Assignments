@@ -8,7 +8,7 @@ import matplotlib.pyplot as pt
 import pandas as pd
 import math
 
-
+#hello
 def euclidean_distance(a,b):
     ans=0.0
     #print(a,b)
