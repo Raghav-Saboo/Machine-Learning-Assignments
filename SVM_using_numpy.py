@@ -85,7 +85,7 @@ def create_svm(X_train,y_train,kernel,eps,C):
         K=(1.+1./1.0*np.dot(x,x.T))**1.0
         K=np.tanh(K/len(X_train[0])+1.0)
 
-    P = npytrain * npytrain.transpose() * K
+    P = np.dot(npytrain.transpose(),npytrain) * K
 
     P = 0.5 * P;
 

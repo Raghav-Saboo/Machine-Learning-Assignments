@@ -64,7 +64,7 @@ def create_svm(X_train,y_train,type,eps,C):
 
     #K = np.dot(np.array(X_train), np.array(X_train).transpose())
 
-    P = 1.0*npytrain * npytrain.transpose() * K
+    P = np.dot(npytrain.transpose(),npytrain) * K
 
     P = 0.5 * P;
 
@@ -203,6 +203,8 @@ for j in range(len(y_test)):
     pr+=b;
     out.append(pr)
 
+    #print(pr, end=' ')
+
     pr=0.0;
     supp_vec = svm_own1[0]
     b = svm_own1[1];
@@ -211,12 +213,16 @@ for j in range(len(y_test)):
     pr += b;
     out.append(pr)
 
+    #print(pr,end=' ')
+
     pr=0.0;
     supp_vec = svm_own2[0]
     b = svm_own2[1];
     for i in range(len(supp_vec)):
         pr = pr + y2[supp_vec[i][1]] * supp_vec[i][0] * ker(X_test[j], X_train[supp_vec[i][1]],kernel);
     pr += b;
+
+    #print(pr)
 
     out.append(pr)
     out=np.array(out)

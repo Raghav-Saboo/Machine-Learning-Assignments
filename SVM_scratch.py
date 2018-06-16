@@ -47,7 +47,7 @@ def create_svm(X_train,y_train,kernel,eps,C):
 
     K = np.array(K)
 
-    P = npytrain * npytrain.transpose() * K
+    P = np.dot(npytrain.transpose(),npytrain) * K
 
     P = 0.5 * P;
 
@@ -129,6 +129,9 @@ for i in range(len(y)):
 
 X_train,X_test,y_train,y_test=train_test_split(X,y1,test_size=0.4,random_state=1)
 
+
+print(X[:,0].max());
+
 npytrain=np.array(y_train)
 npytrain=npytrain.reshape(1,len(y_train))
 
@@ -145,6 +148,7 @@ for j in range(len(y_test)):
     for i in range(len(supp_vec)):
         pr=pr+y_train[supp_vec[i][1]]*supp_vec[i][0]*ker(X_test[j],X_train[supp_vec[i][1]],kernel);
     pr+=b;
+    #print(pr)
     op.append(pr)
 
 op=np.array(op)
@@ -163,12 +167,14 @@ print(accuracy_score(y_test,svm.predict(X_test)))
 x_min, x_max = X[:, 0].min() - .5, X[:, 0].max() + .5
 y_min, y_max = X[:, 1].min() - .5, X[:, 1].max() + .5
 h = 0.02
+print(x_min,x_max,y_min,y_max)
 # Generate a grid of points with distance h between them
 xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
 # Predict the function value for the whole gid
 Z = (predict_1(svm_own,kernel,np.c_[xx.ravel(), yy.ravel()]))
+#print(Z.shape)
 Z = Z.reshape(xx.shape)
-print(Z)
+#print(Z.shape)
 # Plot the contour and training examples
 plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral)
 plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.Spectral)
